@@ -1,0 +1,15 @@
+#!/bin/bash
+# DKMS build script for the eva-driver (EVA/CVP) kernel driver.
+# DKMS sets cwd to $dkms_tree/$module/$version/build/ before invoking MAKE.
+
+set -euo pipefail
+
+KERNEL_VER="${1}"
+BUILD_DIR="$(pwd)"
+KERNEL_BUILD="/lib/modules/${KERNEL_VER}/build"
+
+make -C "${KERNEL_BUILD}" M="${BUILD_DIR}" \
+	KERNEL_SRC="${KERNEL_BUILD}" \
+	EVA_ROOT="${BUILD_DIR}" \
+	CONFIG_MSM_EVA=m \
+	modules
