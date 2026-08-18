@@ -1,0 +1,8 @@
+/.debhelper/
+/files
+/*.log
+/*.debhelper
+/*.substvars
+/eva-dkms/
+/eva-linux-dev/
+/debhelper-build-stamp

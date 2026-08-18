@@ -1,0 +1,38 @@
+#!/usr/bin/make -f
+
+include /usr/share/dpkg/pkg-info.mk
+# used in debian/eva-dkms.install
+export DEB_VERSION_UPSTREAM
+
+DKMS_STAGED := debian/eva-dkms/usr/src/eva-driver-$(DEB_VERSION_UPSTREAM)
+
+%:
+	dh $@ --with dkms
+
+override_dh_install:
+	# eva-dkms.install file installs "*", so exclude debian dir
+	dh_install -X./debian
+	# manually copy these excluded scripts
+	cp -a debian/dkms-build debian/dkms-clean $(DKMS_STAGED)
+	chmod 0755 $(DKMS_STAGED)/dkms-build $(DKMS_STAGED)/dkms-clean
+
+# dh_dkms installs dkms.conf and generates the postinst/prerm maintainer
+# scripts that register and build the module on the target system.
+# Older dh-dkms (e.g. Ubuntu's dh-dkms 3.0.11) does not substitute
+# #MODULE_VERSION# and stages dkms.conf under a literal "#MODULE_VERSION#"
+# directory instead of $(DKMS_STAGED); fix both up. This is a no-op on
+# toolchains that already substitute correctly.
+execute_after_dh_dkms:
+	@if [ -d 'debian/eva-dkms/usr/src/eva-driver-#MODULE_VERSION#' ]; then \
+	    mv 'debian/eva-dkms/usr/src/eva-driver-#MODULE_VERSION#'/* $(DKMS_STAGED)/ && \
+	    rmdir 'debian/eva-dkms/usr/src/eva-driver-#MODULE_VERSION#'; \
+	fi
+	sed -i "s/#MODULE_VERSION#/$(DEB_VERSION_UPSTREAM)/g" \
+	    $(DKMS_STAGED)/dkms.conf \
+	    debian/eva-dkms.postinst.debhelper \
+	    debian/eva-dkms.prerm.debhelper 2>/dev/null || true
+
+override_dh_auto_clean:
+override_dh_auto_build:
+override_dh_auto_test:
+override_dh_auto_install:

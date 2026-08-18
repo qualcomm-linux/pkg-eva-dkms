@@ -1,0 +1,35 @@
+Source: eva-dkms
+Section: contrib/kernel
+Priority: optional
+Maintainer: Sandeep Singh <sasingh@qti.qualcomm.com>
+Build-Depends: debhelper-compat (= 13),
+               dh-dkms | dh-sequence-dkms,
+               cpio
+Standards-Version: 4.7.2
+Homepage: https://github.com/qualcomm-linux/eva-driver
+Vcs-Browser: https://github.com/qualcomm-linux/pkg-eva-dkms
+Vcs-Git: https://github.com/qualcomm-linux/pkg-eva-dkms.git
+
+Package: eva-dkms
+Architecture: arm64
+Depends: ${misc:Depends}, dkms (>= 2.8.3)
+Description: EVA (CVP) DKMS kernel driver
+ EVA is the dedicated computer-vision accelerator block on Snapdragon platforms.
+ This package contains the DKMS source for the msm-eva kernel driver, built and
+ installed against the currently running kernel by DKMS.
+ .
+ The driver exposes the EVA/CVP hardware queue interface (HFI) to
+ userspace, manages EVA firmware load, power/clock/bus scaling, IOMMU
+ context banks, and buffer/session lifecycle for camera and vision
+ workloads offloaded to the EVA core.
+
+Package: eva-linux-dev
+Architecture: arm64
+Provides: eva-uapi-dev
+Depends: ${misc:Depends}
+Description: EVA (CVP) Linux kernel headers (UAPI)
+ EVA (Enhanced Vision Accelerator, exposed to the kernel as CVP) is the
+ dedicated computer-vision accelerator block on Snapdragon platforms.
+ .
+ This package provides the Linux kernel headers specifically needed to
+ build userspace libraries and applications for EVA (UAPI).
