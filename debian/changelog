@@ -1,12 +1,6 @@
-eva-dkms (1.0.1-0qli1~) UNRELEASED; urgency=medium
-
-  * New upstream release
-
- -- GitHub Service Bot <githubservice@qti.qualcomm.com>  Wed, 19 Aug 2026 13:49:47 +0000
-
-eva-dkms (1.0.0-0qli1) noble; urgency=medium
+eva-dkms (1.0.1-0qli+staging1~bpo13+1~) UNRELEASED; urgency=medium
 
   [ Sandeep Singh ]
   * Initial release.
 
- -- Sandeep Singh <sasingh@qti.qualcomm.com>  Wed, 05 Aug 2026 12:19:14 +0530
+ -- GitHub Service Bot <githubservice@qti.qualcomm.com>  Wed, 19 Aug 2026 13:49:47 +0000
